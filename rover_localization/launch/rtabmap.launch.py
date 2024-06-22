@@ -58,9 +58,6 @@ def generate_launch_description():
         "Optimizer/Strategy": "1",
         "Optimizer/GravitySigma": "0.0",
 
-        "Rtabmap/DetectionRate": "2",
-        "Rtabmap/CreateIntermediateNodes": "true",
-
         "RGBD/OptimizeMaxError": "1.0",
         "RGBD/OptimizeFromGraphEnd": "true",
         "RGBD/CreateOccupancyGrid": "true",
