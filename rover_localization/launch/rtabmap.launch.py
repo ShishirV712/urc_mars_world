@@ -55,21 +55,26 @@ def generate_launch_description():
         "qos_imu": 2,
 
         # 0=TORO, 1=g2o, 2=GTSAM and 3=Ceres
-        "Optimizer/Strategy": "1",
+        "Optimizer/Strategy": "2",
         "Optimizer/GravitySigma": "0.0",
 
+        "RGBD/Enabled": "true",
         "RGBD/OptimizeMaxError": "1.0",
         "RGBD/OptimizeFromGraphEnd": "true",
         "RGBD/CreateOccupancyGrid": "true",
+        "RGBD/LoopClosureIdentityGuess": "false",
+
+        "Rtabmap/CreateIntermediateNodes": "false",
 
         "GFTT/MinDistance": "5.0",
-        "GFTT/QualityLevel": "0.001",
+        "GFTT/QualityLevel": "0.002",
         "GFTT/BlockSize": "4",
         "GFTT/UseHarrisDetector": "false",
         "GFTT/K": "0.04",
 
         "BRIEF/Bytes": "64",
 
+        # Motion estimation approach: 0:3D->3D, 1:3D->2D (PnP), 2:2D->2D (Epipolar Geometry)
         "Vis/EstimationType": "1",
         "Vis/ForwardEstOnly": "true",
         # 0=SURF 1=SIFT 2=ORB 3=FAST/FREAK 4=FAST/BRIEF 5=GFTT/FREAK 6=GFTT/BRIEF 7=BRISK 8=GFTT/ORB 9=KAZE 10=ORB-OCTREE 11=SuperPoint 12=SURF/FREAK 13=GFTT/DAISY 14=SURF/DAISY 15=PyDetector
@@ -98,9 +103,8 @@ def generate_launch_description():
         "Grid/3D": "true",
         "Grid/MapFrameProjection": "true",
 
-        "GridGlobal/FullUpdate": "true",
         "GridGlobal/UpdateError": "0.01",
-        "GridGlobal/MinSize": "200",
+        "GridGlobal/MinSize": "100.0",
         "GridGlobal/Eroded": "true",
         "GridGlobal/FloodFillDepth": "16"
     }]

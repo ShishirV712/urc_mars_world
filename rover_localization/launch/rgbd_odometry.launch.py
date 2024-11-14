@@ -40,20 +40,20 @@ def generate_launch_description():
 
         # 0=TORO, 1=g2o, 2=GTSAM and 3=Ceres
         "Optimizer/Strategy": "2",
-        "Optimizer/GravitySigma": "0.3",
+        "Optimizer/GravitySigma": "0.0",
 
         # 0=Frame-to-Map (F2M) 1=Frame-to-Frame (F2F) 2=Fovis 3=viso2 4=DVO-SLAM 5=ORB_SLAM2 6=OKVIS 7=LOAM 8=MSCKF_VIO 9=VINS-Fusion 10=OpenVINS 11=FLOAM 12=Open3D
         "Odom/Strategy": "0",
         "Odom/ResetCountdown": "1",
         "Odom/Holonomic": "false",
         # 0=No filtering 1=Kalman filtering 2=Particle filtering
-        "Odom/FilteringStrategy": "0",
-        "Odom/ParticleSize": "400",
+        "Odom/FilteringStrategy": "1",
+        "Odom/ParticleSize": "500",
         "Odom/GuessMotion": "true",
         "Odom/AlignWithGround": "false",
 
         "GFTT/MinDistance": "5.0",
-        "GFTT/QualityLevel": "0.001",
+        "GFTT/QualityLevel": "0.002",
         "GFTT/BlockSize": "4",
         "GFTT/UseHarrisDetector": "false",
         "GFTT/K": "0.04",
@@ -84,6 +84,7 @@ def generate_launch_description():
 
         "BRIEF/Bytes": "64",
 
+        # Motion estimation approach: 0:3D->3D, 1:3D->2D (PnP), 2:2D->2D (Epipolar Geometry)
         "Vis/EstimationType": "1",
         "Vis/ForwardEstOnly": "true",
         # 0=SURF 1=SIFT 2=ORB 3=FAST/FREAK 4=FAST/BRIEF 5=GFTT/FREAK 6=GFTT/BRIEF 7=BRISK 8=GFTT/ORB 9=KAZE 10=ORB-OCTREE 11=SuperPoint 12=SURF/FREAK 13=GFTT/DAISY 14=SURF/DAISY 15=PyDetector
@@ -108,12 +109,12 @@ def generate_launch_description():
     ]
 
     return LaunchDescription([
-
         Node(
             package="rtabmap_odom",
             executable="rgbd_odometry",
             output="log",
             parameters=parameters,
             remappings=remappings,
-            arguments=["--ros-args", "--log-level", "Error"]),
+            arguments=["--ros-args", "--log-level", "Error"],
+        ),
     ])
