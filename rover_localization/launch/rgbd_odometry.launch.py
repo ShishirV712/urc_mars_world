@@ -52,10 +52,13 @@ def generate_launch_description():
         "Odom/GuessMotion": "true",
         "Odom/AlignWithGround": "false",
 
-        "GFTT/MinDistance": "5.0",
-        "GFTT/QualityLevel": "0.002",
-        "GFTT/BlockSize": "4",
-        "GFTT/UseHarrisDetector": "false",
+        "OdomF2M/MaxSize": "5000",
+        "OdomF2M/ScanMaxSize": "5000",
+
+        "GFTT/MinDistance": "7.0",
+        "GFTT/QualityLevel": "0.0005",
+        "GFTT/BlockSize": "3",
+        "GFTT/UseHarrisDetector": "true",
         "GFTT/K": "0.04",
 
         "SURF/Extended": "true",
@@ -91,7 +94,7 @@ def generate_launch_description():
         "Vis/FeatureType": "8",
         "Vis/DepthAsMask": "true",
         "Vis/CorGuessWinSize": "40",
-        "Vis/MaxFeatures": "1000",
+        "Vis/MaxFeatures": "0",
         "Vis/MinDepth": "0.0",
         "Vis/MaxDepth": "0.0",
         # 0=Features Matching, 1=Optical Flow

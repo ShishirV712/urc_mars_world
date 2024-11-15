@@ -39,7 +39,7 @@ def generate_launch_description():
     launch_rtabmapviz = LaunchConfiguration("launch_rtabmapviz")
     launch_rtabmapviz_cmd = DeclareLaunchArgument(
         "launch_rtabmapviz",
-        default_value="False",
+        default_value="True",
         description="Wheather to launch rtabmapviz")
 
     parameters = [{
@@ -62,14 +62,14 @@ def generate_launch_description():
         "RGBD/OptimizeMaxError": "1.0",
         "RGBD/OptimizeFromGraphEnd": "true",
         "RGBD/CreateOccupancyGrid": "true",
-        "RGBD/LoopClosureIdentityGuess": "false",
+        "RGBD/LoopClosureIdentityGuess": "true",
 
         "Rtabmap/CreateIntermediateNodes": "false",
 
-        "GFTT/MinDistance": "5.0",
-        "GFTT/QualityLevel": "0.002",
-        "GFTT/BlockSize": "4",
-        "GFTT/UseHarrisDetector": "false",
+        "GFTT/MinDistance": "7.0",
+        "GFTT/QualityLevel": "0.0005",
+        "GFTT/BlockSize": "3",
+        "GFTT/UseHarrisDetector": "true",
         "GFTT/K": "0.04",
 
         "BRIEF/Bytes": "64",
