@@ -8,6 +8,7 @@ This is a ROS 2 (Humble) version of the [Sawppy the Rover](https://github.com/Ro
 2. [Usage](#usage)
    - [Linux Service](#linux-service)
 3. [Gazebo Simulation](#gazebo-simulation)
+4. [Citations](#citations)
 
 ## Installation
 
@@ -75,3 +76,21 @@ $ ros2 launch rover_gazebo forest.launch.py
 <div>
     <img src="docs/forest.png" width="100%"/>
 </div>
+
+## Citations
+
+The `v0.7` version has been used in the work `Comparison of Concentric Surface Planetary Explorations Using an Ackerman Rover in a Lunar Simulation` from the `2024 International Conference on Space Robotics (iSpaRo)`.
+
+```bibtex
+@INPROCEEDINGS{10685849,
+  author={González-Santamarta, Miguel Á. and Rodríguez-Lera, Francisco J.},
+  booktitle={2024 International Conference on Space Robotics (iSpaRo)},
+  title={Comparison of Concentric Surface Planetary Explorations Using an Ackerman Rover in a Lunar Simulation},
+  year={2024},
+  volume={},
+  number={},
+  pages={239-244},
+  keywords={Spirals;Navigation;Moon;Cameras;Sensors;Visual odometry;Testing},
+  doi={10.1109/iSpaRo60631.2024.10685849}
+}
+```
