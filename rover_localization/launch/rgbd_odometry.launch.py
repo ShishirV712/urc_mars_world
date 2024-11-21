@@ -56,7 +56,7 @@ def generate_launch_description():
         "OdomF2M/ScanMaxSize": "5000",
 
         "GFTT/MinDistance": "7.0",
-        "GFTT/QualityLevel": "0.0005",
+        "GFTT/QualityLevel": "0.001",
         "GFTT/BlockSize": "3",
         "GFTT/UseHarrisDetector": "true",
         "GFTT/K": "0.04",

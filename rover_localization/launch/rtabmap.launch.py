@@ -59,15 +59,18 @@ def generate_launch_description():
         "Optimizer/GravitySigma": "0.0",
 
         "RGBD/Enabled": "true",
-        "RGBD/OptimizeMaxError": "1.0",
+        "RGBD/OptimizeMaxError": "0.5",
         "RGBD/OptimizeFromGraphEnd": "true",
         "RGBD/CreateOccupancyGrid": "true",
         "RGBD/LoopClosureIdentityGuess": "true",
+        "RGBD/LocalBundleOnLoopClosure": "true",
+
+        "VhEp/Enabled": "true",
 
         "Rtabmap/CreateIntermediateNodes": "false",
 
         "GFTT/MinDistance": "7.0",
-        "GFTT/QualityLevel": "0.0005",
+        "GFTT/QualityLevel": "0.001",
         "GFTT/BlockSize": "3",
         "GFTT/UseHarrisDetector": "true",
         "GFTT/K": "0.04",
