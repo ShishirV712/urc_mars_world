@@ -84,8 +84,8 @@ controller_server:
 
     goal_checker:
       plugin: nav2_controller::SimpleGoalChecker
-      xy_goal_tolerance: 0.3
-      yaw_goal_tolerance: 0.3
+      xy_goal_tolerance: 0.5
+      yaw_goal_tolerance: 0.5
       stateful: True
 
     FollowPath:
@@ -114,7 +114,8 @@ controller_server:
       rotate_to_heading_min_angle: 0.785
       max_angular_accel: 3.2
 
-      max_robot_pose_search_dist: 10.0
+      max_robot_pose_search_dist: 25.0
+      allow_reversing: True
 
 local_costmap:
   local_costmap:
@@ -214,7 +215,7 @@ planner_server:
 
     GridBased:
       plugin: nav2_smac_planner/SmacPlannerHybrid
-      tolerance: 0.01 # tolerance for planning if unable to reach exact pose, in meters
+      tolerance: 0.5 # tolerance for planning if unable to reach exact pose, in meters
       downsample_costmap: False # whether or not to downsample the map
       downsampling_factor: 1 # multiplier for the resolution of the costmap layer (e.g. 2 on a 5cm costmap would be 10cm)
       allow_unknown: True # allow traveling in unknown space
@@ -226,7 +227,7 @@ planner_server:
       angle_quantization_bins: 256 # For Hybrid nodes: Number of angle bins for search, must be 1 for 2D node (no angle search)
       analytic_expansion_ratio: 20.0 # For Hybrid/Lattice nodes: The ratio to attempt analytic expansions during search for final approach.
       analytic_expansion_max_length: 20.0 # For Hybrid/Lattice nodes: The maximum length of the analytic expansion to be considered valid to prevent unsafe shortcutting (in meters). This should be scaled with minimum turning radius and be no less than 4-5x the minimum radius
-      minimum_turning_radius: 0.5 # For Hybrid/Lattice nodes: minimum turning radius in m of path / vehicle
+      minimum_turning_radius: 0.4 # For Hybrid/Lattice nodes: minimum turning radius in m of path / vehicle
       reverse_penalty: 2.1 # For Reeds-Shepp model: penalty to apply if motion is reversing, must be => 1
       change_penalty: 0.0 # For Hybrid nodes: penalty to apply if motion is changing directions, must be >= 0
       non_straight_penalty: 1.0 # For Hybrid nodes: penalty to apply if motion is non-straight, must be => 1
@@ -236,13 +237,6 @@ planner_server:
       lookup_table_size: 20.0 # For Hybrid nodes: Size of the dubin/reeds-sheep distance window to cache, in meters.
       cache_obstacle_heuristic: True # For Hybrid nodes: Cache the obstacle map dynamic programming distance expansion heuristic between subsiquent replannings of the same goal location. Dramatically speeds up replanning performance (40x) if costmap is largely static.
       allow_reverse_expansion: False # For Lattice nodes: Whether to expand state lattice graph in forward primitives or reverse as well, will double the branching factor at each step.
-      smooth_path: False # For Lattice/Hybrid nodes: Whether or not to smooth the path, always true for 2D nodes.
-      smoother:
-        max_iterations: 1000
-        w_smooth: 0.3
-        w_data: 0.2
-        tolerance: 1.0e-10
-        do_refinement: True # Whether to recursively run the smoother 3 times on the results from prior runs to refine the results further
 
 smoother_server:
   ros__parameters:
