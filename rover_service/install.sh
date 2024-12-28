@@ -1,6 +1,6 @@
 # dependencies
 echo "--------INSTALLING DEPENDENCIES"
-apt install ros-galactic-joy-linux ros-galactic-teleop-twist-joy ros-galactic-urg-node -y >>/dev/null
+apt install ros-humble-joy-linux ros-humble-teleop-twist-joy ros-humble-urg-node -y >>/dev/null
 
 # copy rover project
 echo "--------COPYING SH FILE"
