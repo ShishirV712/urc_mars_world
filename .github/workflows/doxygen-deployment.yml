@@ -2,7 +2,7 @@ name: Doxygen Deployment
 
 on:
   push:
-    branches: [main]
+    branches: [humble]
   workflow_dispatch:
 
 jobs:
