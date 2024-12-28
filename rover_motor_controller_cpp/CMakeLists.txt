@@ -21,7 +21,6 @@ find_package(rclcpp REQUIRED)
 find_package(rover_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
-
 INCLUDE_DIRECTORIES(
   include
 )
@@ -38,7 +37,6 @@ add_executable(controller_node ${CONTROLLER_NODE_SOURCES})
 target_link_libraries(controller_node pthread boost_system)
 ament_target_dependencies(controller_node rclcpp rover_msgs)
 
-
 ### VEL PARSER NODE
 set(VEL_PARSER_NODE_SOURCES
   src/vel_parser_node_main.cpp
@@ -47,7 +45,6 @@ set(VEL_PARSER_NODE_SOURCES
 add_executable(vel_parser_node ${VEL_PARSER_NODE_SOURCES})
 target_link_libraries(vel_parser_node)
 ament_target_dependencies(vel_parser_node rclcpp rover_msgs geometry_msgs)
-
 
 # INSTALL
 install(TARGETS 
@@ -60,17 +57,5 @@ install(DIRECTORY
 launch
 DESTINATION share/${PROJECT_NAME}/
 )
-
-
-if(BUILD_TESTING)
-  find_package(ament_lint_auto REQUIRED)
-  # the following line skips the linter which checks for copyrights
-  # uncomment the line when a copyright and license is not present in all source files
-  #set(ament_cmake_copyright_FOUND TRUE)
-  # the following line skips cpplint (only works in a git repo)
-  # uncomment the line when this package is not in a git repo
-  #set(ament_cmake_cpplint_FOUND TRUE)
-  ament_lint_auto_find_test_dependencies()
-endif()
 
 ament_package()

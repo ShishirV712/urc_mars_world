@@ -17,11 +17,6 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(rover_motor_controller_cpp REQUIRED)
-find_package(joy_linux REQUIRED)
-find_package(teleop_twist_joy REQUIRED)
-find_package(urg_node REQUIRED)
-
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
