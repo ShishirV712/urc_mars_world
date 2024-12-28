@@ -38,14 +38,16 @@ def generate_launch_description():
         "nav2_planner",
         default_value="SmacHybrid",
         choices=["SmacHybrid", "SmacLattice"],
-        description="Nav2 planner (SmacHybrid or SmacLattice)")
+        description="Nav2 planner (SmacHybrid or SmacLattice)",
+    )
 
     nav2_controller = LaunchConfiguration("nav2_controller")
     nav2_controller_cmd = DeclareLaunchArgument(
         "nav2_controller",
         default_value="RPP",
         choices=["RPP", "TEB"],
-        description="Nav2 controller (RPP or TEB)")
+        description="Nav2 controller (RPP or TEB)",
+    )
 
     gazebo_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -55,8 +57,8 @@ def generate_launch_description():
             "world": os.path.join(pkg_path, "worlds", "low_moon.world"),
             "initial_pose_z": "1.16",
             "nav2_planner": nav2_planner,
-            "nav2_controller": nav2_controller
-        }.items()
+            "nav2_controller": nav2_controller,
+        }.items(),
     )
 
     ld = LaunchDescription()

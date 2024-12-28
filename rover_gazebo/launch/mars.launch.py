@@ -36,9 +36,10 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(
             os.path.join(pkg_path, "launch", "gazebo.launch.py")
         ),
-        launch_arguments={"world": os.path.join(
-            pkg_path, "worlds", "mars.world"),
-            "initial_pose_z": "-0.45"}.items()
+        launch_arguments={
+            "world": os.path.join(pkg_path, "worlds", "mars.world"),
+            "initial_pose_z": "-0.45",
+        }.items(),
     )
 
     ld = LaunchDescription()

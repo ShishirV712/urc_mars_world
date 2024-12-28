@@ -1,4 +1,3 @@
-
 """
 Lewansoul wrapper.
 """
@@ -16,7 +15,7 @@ from .lx16a_consts import (
     SERVO_LEFT_FRONT,
     SERVO_RIGHT_FRONT,
     SERVO_LEFT_BACK,
-    SERVO_RIGHT_BACK
+    SERVO_RIGHT_BACK,
 )
 
 

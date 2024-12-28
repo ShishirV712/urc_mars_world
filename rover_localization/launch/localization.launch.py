@@ -38,29 +38,27 @@ def generate_launch_description():
     use_sim_time_cmd = DeclareLaunchArgument(
         "use_sim_time",
         default_value="False",
-        description="Use simulation (Gazebo) clock if True")
+        description="Use simulation (Gazebo) clock if True",
+    )
 
     rgbd_odometry_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(pkg_rover_localization,
-                         "launch", "rgbd_odometry.launch.py")
+            os.path.join(pkg_rover_localization, "launch", "rgbd_odometry.launch.py")
         )
     )
 
     rtabmap_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(pkg_rover_localization,
-                         "launch", "rtabmap.launch.py")
+            os.path.join(pkg_rover_localization, "launch", "rtabmap.launch.py")
         ),
-        launch_arguments={"use_sim_time": use_sim_time}.items()
+        launch_arguments={"use_sim_time": use_sim_time}.items(),
     )
 
     ekf_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(pkg_rover_localization,
-                         "launch", "ekf.launch.py")
+            os.path.join(pkg_rover_localization, "launch", "ekf.launch.py")
         ),
-        launch_arguments={"use_sim_time": use_sim_time}.items()
+        launch_arguments={"use_sim_time": use_sim_time}.items(),
     )
 
     ld = LaunchDescription()

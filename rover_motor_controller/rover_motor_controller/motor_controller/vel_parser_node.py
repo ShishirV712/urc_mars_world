@@ -44,8 +44,7 @@ class VelParserNode(Node):
         super().__init__("vel_parser_node")
 
         # declaring params
-        self.declare_parameter("hardware_distances",
-                               [23.0, 25.5, 28.5, 26.0])
+        self.declare_parameter("hardware_distances", [23.0, 25.5, 28.5, 26.0])
         self.declare_parameter("enc_min", 250)
         self.declare_parameter("enc_max", 750)
 
@@ -57,21 +56,26 @@ class VelParserNode(Node):
         self.declare_parameter("angular_factor", 0.0)
 
         # getting params
-        hardware_distances = self.get_parameter(
-            "hardware_distances").get_parameter_value().double_array_value
-        enc_min = self.get_parameter(
-            "enc_min").get_parameter_value().integer_value
-        enc_max = self.get_parameter(
-            "enc_max").get_parameter_value().integer_value
-        self.speed_factor = self.get_parameter(
-            "speed_factor").get_parameter_value().integer_value
+        hardware_distances = (
+            self.get_parameter("hardware_distances")
+            .get_parameter_value()
+            .double_array_value
+        )
+        enc_min = self.get_parameter("enc_min").get_parameter_value().integer_value
+        enc_max = self.get_parameter("enc_max").get_parameter_value().integer_value
+        self.speed_factor = (
+            self.get_parameter("speed_factor").get_parameter_value().integer_value
+        )
 
-        self.linear_limit = self.get_parameter(
-            "linear_limit").get_parameter_value().double_value
-        self.angular_limit = self.get_parameter(
-            "angular_limit").get_parameter_value().double_value
-        self.angular_factor = self.get_parameter(
-            "angular_factor").get_parameter_value().double_value
+        self.linear_limit = (
+            self.get_parameter("linear_limit").get_parameter_value().double_value
+        )
+        self.angular_limit = (
+            self.get_parameter("angular_limit").get_parameter_value().double_value
+        )
+        self.angular_factor = (
+            self.get_parameter("angular_factor").get_parameter_value().double_value
+        )
 
         self.d1 = hardware_distances[0]
         self.d2 = hardware_distances[1]
@@ -82,14 +86,9 @@ class VelParserNode(Node):
         self.enc_max = enc_max
 
         # pubs and subs
-        self.publisher = self.create_publisher(
-            MotorsCommand, "motors_command", 10)
+        self.publisher = self.create_publisher(MotorsCommand, "motors_command", 10)
 
-        self.subscription = self.create_subscription(
-            Twist,
-            "cmd_vel",
-            self.callback,
-            10)
+        self.subscription = self.create_subscription(Twist, "cmd_vel", self.callback, 10)
 
     def callback(self, msg: Twist) -> None:
         """
@@ -102,20 +101,23 @@ class VelParserNode(Node):
         linear = min(msg.linear.x, self.linear_limit)
         angular = min(msg.angular.z, self.angular_limit)
 
-        speed = math.sqrt(math.pow(linear, 2) +
-                          math.pow(angular * self.angular_factor, 2))
+        speed = math.sqrt(
+            math.pow(linear, 2) + math.pow(angular * self.angular_factor, 2)
+        )
 
         if msg.linear.x < 0:
             speed *= -1
 
         norm_speed = self.normalize(
-            speed, -self.linear_limit, self.linear_limit, -100, 100)
-        norm_steering = self.normalize(
-            angular, -self.angular_limit, self.angular_limit, -100, 100) * -1
+            speed, -self.linear_limit, self.linear_limit, -100, 100
+        )
+        norm_steering = (
+            self.normalize(angular, -self.angular_limit, self.angular_limit, -100, 100)
+            * -1
+        )
 
         new_speeds = self.calculate_velocity(norm_speed, norm_steering)
-        new_ticks = self.calculate_target_tick(
-            self.calculate_target_deg(norm_steering))
+        new_ticks = self.calculate_target_tick(self.calculate_target_deg(norm_steering))
 
         motors_command.drive_motor = [int(ele) for ele in new_speeds]
         motors_command.corner_motor = [int(ele) for ele in new_ticks]
@@ -123,8 +125,9 @@ class VelParserNode(Node):
         self.publisher.publish(motors_command)
 
     @staticmethod
-    def normalize(value: float, old_min: float, old_max:
-                  float, new_min: float, new_max: float) -> float:
+    def normalize(
+        value: float, old_min: float, old_max: float, new_min: float, new_max: float
+    ) -> float:
         return (new_max - new_min) * ((value - old_min) / (old_max - old_min)) + new_min
 
     @staticmethod
@@ -161,8 +164,7 @@ class VelParserNode(Node):
             velocity = [v, v, v, -v, -v, -v]
         else:
             # Get radius in centimeters (MAX_RADIUS (255) to MIN_RADIUS (55))
-            radius = MAX_RADIUS - \
-                (((MAX_RADIUS - MIN_RADIUS) * abs(r)) / 100.0)
+            radius = MAX_RADIUS - (((MAX_RADIUS - MIN_RADIUS) * abs(r)) / 100.0)
 
             a = math.pow(self.d2, 2)  # Back - D2
             b = math.pow(self.d3, 2)  # Front - D3
@@ -192,22 +194,18 @@ class VelParserNode(Node):
                 # Go back
                 if r < 0:
                     # Turn Left
-                    velocity = [-abs_v4, -abs_v5, -
-                                abs_v6, abs_v1, abs_v2, abs_v3]
+                    velocity = [-abs_v4, -abs_v5, -abs_v6, abs_v1, abs_v2, abs_v3]
                 else:
                     # Turn Right
-                    velocity = [-abs_v1, -abs_v2, -
-                                abs_v3, abs_v4, abs_v5, abs_v6]
+                    velocity = [-abs_v1, -abs_v2, -abs_v3, abs_v4, abs_v5, abs_v6]
             else:
                 # Go ahead
                 if r < 0:
                     # Turn Left
-                    velocity = [abs_v4, abs_v5,
-                                abs_v6, -abs_v1, -abs_v2, -abs_v3]
+                    velocity = [abs_v4, abs_v5, abs_v6, -abs_v1, -abs_v2, -abs_v3]
                 else:
                     # Turn Right
-                    velocity = [abs_v1, abs_v2,
-                                abs_v3, -abs_v4, -abs_v5, -abs_v6]
+                    velocity = [abs_v1, abs_v2, abs_v3, -abs_v4, -abs_v5, -abs_v6]
 
         speed = [self.speed_factor * i for i in velocity]
 
@@ -262,7 +260,6 @@ class VelParserNode(Node):
         tick = []
 
         for i in range(4):
-            tick.append(self.deg_to_tick(
-                tar_enc[i], self.enc_min, self.enc_max))
+            tick.append(self.deg_to_tick(tar_enc[i], self.enc_min, self.enc_max))
 
         return tick
