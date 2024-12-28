@@ -45,7 +45,7 @@ move_bindings = {
     "w": (1, 0, 0, 0),
     "s": (0, 0, 0, 0),
     "d": (0, 0, 0, -1),
-    "x": (-1, 0, 0, 0)
+    "x": (-1, 0, 0, 0),
 }
 
 
@@ -109,13 +109,13 @@ def main():
                     x = 0.0
                     th = 0.0
 
-                if (status == 14):
+                if status == 14:
                     print(msg)
                 status = (status + 1) % 15
 
                 print(vels(x, th))
 
-            elif (key == "\x03"):
+            elif key == "\x03":
                 break
 
             twist = geometry_msgs.msg.Twist()

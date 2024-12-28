@@ -1,4 +1,3 @@
-
 """
 Lewansoul interface.
 """
@@ -59,12 +58,16 @@ class LX16A(object):
     def _command(self, servo_id: int, command: int, params: int) -> None:
         if isinstance(params, list):
             length = 3 + len(params)
-            checksum = 255 - \
-                ((servo_id + length + command + sum(params)) % 256)
+            checksum = 255 - ((servo_id + length + command + sum(params)) % 256)
 
             command_list = []
-            command_list = [SERVO_FRAME_HEADER,
-                            SERVO_FRAME_HEADER, servo_id, length, command]
+            command_list = [
+                SERVO_FRAME_HEADER,
+                SERVO_FRAME_HEADER,
+                servo_id,
+                length,
+                command,
+            ]
             command_list += params
             command_list += [checksum]
         else:
@@ -72,8 +75,13 @@ class LX16A(object):
             checksum = 255 - ((servo_id + length + command + params) % 256)
 
             command_list = []
-            command_list = [SERVO_FRAME_HEADER,
-                            SERVO_FRAME_HEADER, servo_id, length, command]
+            command_list = [
+                SERVO_FRAME_HEADER,
+                SERVO_FRAME_HEADER,
+                servo_id,
+                length,
+                command,
+            ]
             command_list += [params]
             command_list += [checksum]
 
@@ -82,7 +90,9 @@ class LX16A(object):
         with self._lock:
             self._serial.write(bytearray(command_list))
 
-    def _wait_for_response(self, servo_id: int, command: int, timeout: int = None) -> List[int]:
+    def _wait_for_response(
+        self, servo_id: int, command: int, timeout: int = None
+    ) -> List[int]:
         timeout = Timeout(timeout or self._timeout)
 
         def read(size=1):
@@ -138,13 +148,11 @@ class LX16A(object):
                 continue
 
             if cmd != command:
-                LOGGER.warning(
-                    "Got unexpected command %s response %s", cmd, list(data))
+                LOGGER.warning("Got unexpected command %s response %s", cmd, list(data))
                 continue
 
             if servo_id != SERVO_ID_ALL and sid != servo_id:
-                LOGGER.warning(
-                    "Got command response from unexpected servo %s", sid)
+                LOGGER.warning("Got command response from unexpected servo %s", sid)
                 continue
 
             return params
@@ -174,9 +182,14 @@ class LX16A(object):
         time = clamp(0, 30000, time)
 
         self._command(
-            servo_id, SERVO_MOVE_TIME_WRITE,
-            [lower_byte(position), higher_byte(position),
-             lower_byte(time), higher_byte(time)]
+            servo_id,
+            SERVO_MOVE_TIME_WRITE,
+            [
+                lower_byte(position),
+                higher_byte(position),
+                lower_byte(time),
+                higher_byte(time),
+            ],
         )
 
     def move_prepare(self, servo_id: int, position: int, time: int = 0) -> None:
@@ -184,9 +197,14 @@ class LX16A(object):
         time = clamp(0, 30000, time)
 
         self._command(
-            servo_id, SERVO_MOVE_TIME_WAIT_WRITE,
-            [lower_byte(position), higher_byte(position),
-             lower_byte(time), higher_byte(time)]
+            servo_id,
+            SERVO_MOVE_TIME_WAIT_WRITE,
+            [
+                lower_byte(position),
+                higher_byte(position),
+                lower_byte(time),
+                higher_byte(time),
+            ],
         )
 
     def move_start(self, servo_id: int = SERVO_ID_ALL) -> None:
@@ -196,17 +214,15 @@ class LX16A(object):
         self._command(servo_id, SERVO_MOVE_STOP, [])
 
     def get_prepared_move(self, servo_id: int, timeout: int = None) -> List[int]:
-        """ Returns servo position and time tuple """
-        response = self._query(
-            servo_id, SERVO_MOVE_TIME_WAIT_READ, timeout=timeout)
+        """Returns servo position and time tuple"""
+        response = self._query(servo_id, SERVO_MOVE_TIME_WAIT_READ, timeout=timeout)
         return word(response[0], response[1]), word(response[2], response[3])
 
     ####
     # position functions
     ####
     def get_position_offset(self, servo_id: int, timeout: int = None) -> int:
-        response = self._query(
-            servo_id, SERVO_ANGLE_OFFSET_READ, timeout=timeout)
+        response = self._query(servo_id, SERVO_ANGLE_OFFSET_READ, timeout=timeout)
         deviation = response[0]
 
         if deviation > 127:
@@ -215,8 +231,7 @@ class LX16A(object):
         return deviation
 
     def get_position_limits(self, servo_id: int, timeout: int = None) -> List[int]:
-        response = self._query(
-            servo_id, SERVO_ANGLE_LIMIT_READ, timeout=timeout)
+        response = self._query(servo_id, SERVO_ANGLE_LIMIT_READ, timeout=timeout)
         return word(response[0], response[1]), word(response[2], response[3])
 
     def get_position(self, servo_id: int, timeout: int = None) -> int:
@@ -239,14 +254,21 @@ class LX16A(object):
     def save_position_offset(self, servo_id):
         self._command(servo_id, SERVO_ANGLE_OFFSET_WRITE, [])
 
-    def set_position_limits(self, servo_id: int, min_position: int, max_position: int) -> None:
+    def set_position_limits(
+        self, servo_id: int, min_position: int, max_position: int
+    ) -> None:
         min_position = clamp(0, 1000, min_position)
         max_position = clamp(0, 1000, max_position)
 
         self._command(
-            servo_id, SERVO_ANGLE_LIMIT_WRITE,
-            [lower_byte(min_position), higher_byte(min_position),
-             lower_byte(max_position), higher_byte(max_position)]
+            servo_id,
+            SERVO_ANGLE_LIMIT_WRITE,
+            [
+                lower_byte(min_position),
+                higher_byte(min_position),
+                lower_byte(max_position),
+                higher_byte(max_position),
+            ],
         )
 
     ####
@@ -260,22 +282,28 @@ class LX16A(object):
         response = self._query(servo_id, SERVO_VIN_READ, timeout=timeout)
         return word(response[0], response[1])
 
-    def set_voltage_limits(self, servo_id: int, min_voltage: int, max_voltage: int) -> None:
+    def set_voltage_limits(
+        self, servo_id: int, min_voltage: int, max_voltage: int
+    ) -> None:
         min_voltage = clamp(4500, 12000, min_voltage)
         max_voltage = clamp(4500, 12000, max_voltage)
 
         self._command(
-            servo_id, SERVO_VIN_LIMIT_WRITE,
-            [lower_byte(min_voltage), higher_byte(min_voltage),
-             lower_byte(max_voltage), higher_byte(max_voltage)]
+            servo_id,
+            SERVO_VIN_LIMIT_WRITE,
+            [
+                lower_byte(min_voltage),
+                higher_byte(min_voltage),
+                lower_byte(max_voltage),
+                higher_byte(max_voltage),
+            ],
         )
 
     ####
     # voltage functions
     ####
     def get_max_temperature_limit(self, servo_id: int, timeout: int = None) -> int:
-        response = self._query(
-            servo_id, SERVO_TEMP_MAX_LIMIT_READ, timeout=timeout)
+        response = self._query(servo_id, SERVO_TEMP_MAX_LIMIT_READ, timeout=timeout)
         return response[0]
 
     def get_temperature(self, servo_id: int, timeout: int = None) -> int:
@@ -290,14 +318,12 @@ class LX16A(object):
     # mode functions
     ####
     def get_mode(self, servo_id: int, timeout: int = None) -> int:
-        response = self._query(
-            servo_id, SERVO_OR_MOTOR_MODE_READ, timeout=timeout)
+        response = self._query(servo_id, SERVO_OR_MOTOR_MODE_READ, timeout=timeout)
 
         return response[0]
 
     def get_motor_speed(self, servo_id: int, timeout: int = None) -> int:
-        response = self._query(
-            servo_id, SERVO_OR_MOTOR_MODE_READ, timeout=timeout)
+        response = self._query(servo_id, SERVO_OR_MOTOR_MODE_READ, timeout=timeout)
 
         if response[2][0] != 1:
             return 0
@@ -310,10 +336,7 @@ class LX16A(object):
         return speed
 
     def set_servo_mode(self, servo_id: int) -> None:
-        self._command(
-            servo_id, SERVO_OR_MOTOR_MODE_WRITE,
-            [0, 0, 0, 0]
-        )
+        self._command(servo_id, SERVO_OR_MOTOR_MODE_WRITE, [0, 0, 0, 0])
 
     def set_motor_mode(self, servo_id: int, speed: int = 0) -> None:
         speed = clamp(-1000, 1000, speed)
@@ -322,13 +345,13 @@ class LX16A(object):
             speed += 65536
 
         self._command(
-            servo_id, SERVO_OR_MOTOR_MODE_WRITE,
-            [1, 0, lower_byte(speed), higher_byte(speed)]
+            servo_id,
+            SERVO_OR_MOTOR_MODE_WRITE,
+            [1, 0, lower_byte(speed), higher_byte(speed)],
         )
 
     def is_motor_on(self, servo_id: int, timeout: int = None) -> bool:
-        response = self._query(
-            servo_id, SERVO_LOAD_OR_UNLOAD_READ, timeout=timeout)
+        response = self._query(servo_id, SERVO_LOAD_OR_UNLOAD_READ, timeout=timeout)
         return response[0] == 1
 
     def motor_on(self, servo_id: int) -> None:
