@@ -2,7 +2,7 @@ name: Humble Docker Push
 
 on:
   push:
-    branches: [main]
+    branches: [humble]
   workflow_dispatch:
 
 jobs:
