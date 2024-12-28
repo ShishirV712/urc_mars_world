@@ -14,11 +14,11 @@ This is a ROS 2 (Humble) version of the [Sawppy the Rover](https://github.com/Ro
 ## Installation
 
 ```shell
-$ cd ~/ros2_ws/src
-$ git clone https://github.com/mgonzs13/ros2_rover
-$ cd ~/ros2_ws
-$ rosdep install --from-paths src -r -y
-$ colcon build
+cd ~/ros2_ws/src
+git clone https://github.com/mgonzs13/ros2_rover
+cd ~/ros2_ws
+rosdep install --from-paths src -r -y
+colcon build
 ```
 
 ## Docker
@@ -42,7 +42,7 @@ docker run -it --rm rover
 </div>
 
 ```shell
-$ ros2 launch rover_bringup rover.launch.py
+ros2 launch rover_bringup rover.launch.py
 ```
 
 ### Linux Service
@@ -50,14 +50,14 @@ $ ros2 launch rover_bringup rover.launch.py
 A Linux service can be created to control the execution and launch everything at boot time. To create the rover service, the following commands are used:
 
 ```shell
-$ cd ~/ros2_ws/src/ros2_rover/rover_service
-$ sudo ./install.sh
+cd ~/ros2_ws/src/ros2_rover/rover_service
+sudo ./install.sh
 ```
 
 Check rover service:
 
 ```shell
-$ sudo service rover status
+sudo service rover status
 ```
 
 ## Gazebo Simulation
@@ -65,7 +65,7 @@ $ sudo service rover status
 ### Moon
 
 ```shell
-$ ros2 launch rover_gazebo moon.launch.py
+ros2 launch rover_gazebo moon.launch.py
 ```
 
 <div>
@@ -75,7 +75,7 @@ $ ros2 launch rover_gazebo moon.launch.py
 ### Mars
 
 ```shell
-$ ros2 launch rover_gazebo mars.launch.py
+ros2 launch rover_gazebo mars.launch.py
 ```
 
 <div>
@@ -85,7 +85,7 @@ $ ros2 launch rover_gazebo mars.launch.py
 ### Forest
 
 ```shell
-$ ros2 launch rover_gazebo forest.launch.py
+ros2 launch rover_gazebo forest.launch.py
 ```
 
 <div>
