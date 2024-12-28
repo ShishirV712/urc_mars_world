@@ -11,6 +11,8 @@ This is a ROS 2 (Humble) version of the [Sawppy the Rover](https://github.com/Ro
 |  **Humble**  | [`main`](https://github.com/mgonzs13/ros2_rover/tree/main) | [![Humble Build](https://github.com/mgonzs13/ros2_rover/actions/workflows/humble-docker-build.yml/badge.svg?branch=main)](https://github.com/mgonzs13/ros2_rover/actions/workflows/humble-docker-build.yml?branch=main) | [![Docker Image](https://img.shields.io/badge/Docker%20Image%20-humble-blue)](https://hub.docker.com/r/mgons/rover/tags?name=humble) | [![Doxygen Deployment](https://github.com/mgonzs13/ros2_rover/actions/workflows/doxygen-deployment.yml/badge.svg)](https://mgonzs13.github.io/ros2_rover/) |
 |   **Iron**   | [`main`](https://github.com/mgonzs13/ros2_rover/tree/main) |    [![Iron Build](https://github.com/mgonzs13/ros2_rover/actions/workflows/iron-docker-build.yml/badge.svg?branch=main)](https://github.com/mgonzs13/ros2_rover/actions/workflows/iron-docker-build.yml?branch=main)    |   [![Docker Image](https://img.shields.io/badge/Docker%20Image%20-iron-blue)](https://hub.docker.com/r/mgons/rover/tags?name=iron)   | [![Doxygen Deployment](https://github.com/mgonzs13/ros2_rover/actions/workflows/doxygen-deployment.yml/badge.svg)](https://mgonzs13.github.io/ros2_rover/) |
 
+</div>
+
 ## Table of Contents
 
 1. [Installation](#installation)
