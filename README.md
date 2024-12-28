@@ -7,8 +7,9 @@ This is a ROS 2 (Humble) version of the [Sawppy the Rover](https://github.com/Ro
 1. [Installation](#installation)
 2. [Usage](#usage)
    - [Linux Service](#linux-service)
-3. [Gazebo Simulation](#gazebo-simulation)
-4. [Citations](#citations)
+3. [Docker](#docker)
+4. [Gazebo Simulation](#gazebo-simulation)
+5. [Citations](#citations)
 
 ## Installation
 
@@ -18,6 +19,20 @@ $ git clone https://github.com/mgonzs13/ros2_rover
 $ cd ~/ros2_ws
 $ rosdep install --from-paths src -r -y
 $ colcon build
+```
+
+## Docker
+
+You can create a docker image to test this repo. Use the following common inside the directory of ros2_rover.
+
+```shell
+docker build -t rover .
+```
+
+After the image is created, run a docker container with the following command.
+
+```shell
+docker run -it --rm rover
 ```
 
 ## Usage
