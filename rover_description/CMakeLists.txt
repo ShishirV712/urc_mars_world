@@ -5,7 +5,7 @@ project(rover_description)
 find_package(ament_cmake REQUIRED)
 
 install(
-  DIRECTORY config launch meshes urdf robots
+  DIRECTORY config launch meshes robots urdf
   DESTINATION share/${PROJECT_NAME}
 )
 

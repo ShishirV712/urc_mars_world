@@ -119,9 +119,9 @@ def generate_launch_description():
     robot_state_publisher_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(
-                get_package_share_directory("rover_description"),
+                get_package_share_directory("urc"),
                 "launch",
-                "robot_state_publisher.launch.py",
+                "rsp.launch.py",
             )
         )
     )
